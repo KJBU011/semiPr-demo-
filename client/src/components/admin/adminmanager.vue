@@ -369,6 +369,6 @@ export default {
   },
 };
 </script>
-<style src="@/components/basic/css/common.css"></style>
-<style src="@/components/admin/css/admintable.css"></style>
-<style src="@/components/admin/css/adminmanager.css"></style>
+<style src="@/components/basic/CSS/common.css"></style>
+<style src="@/components/admin/CSS/admintable.css"></style>
+<style src="@/components/admin/CSS/adminmanager.css"></style>

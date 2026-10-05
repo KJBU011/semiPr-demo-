@@ -269,5 +269,5 @@ export default {
 };
 </script>
 
-<style src="@/components/basic/css/common.css"></style>
-<style src="@/components/admin/css/admincarbar.css"></style>
+<style src="@/components/basic/CSS/common.css"></style>
+<style src="@/components/admin/CSS/admincarbar.css"></style>

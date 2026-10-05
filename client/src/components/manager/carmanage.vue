@@ -179,6 +179,6 @@ export default {
 };
 </script>
 
-<style src="@/components/basic/css/common.css"></style>
-<style src="@/components/manager/css/data-table.css"></style>
-<style src="@/components/manager/css/carmanage.css"></style>
+<style src="@/components/basic/CSS/common.css"></style>
+<style src="@/components/manager/CSS/data-table.css"></style>
+<style src="@/components/manager/CSS/carmanage.css"></style>

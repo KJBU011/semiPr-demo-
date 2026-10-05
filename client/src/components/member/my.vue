@@ -794,5 +794,5 @@ export default {
 };
 </script>
 
-<style src="@/components/basic/css/common.css"></style>
-<style src="@/components/member/css/my.css"></style>
+<style src="@/components/basic/CSS/common.css"></style>
+<style src="@/components/member/CSS/my.css"></style>

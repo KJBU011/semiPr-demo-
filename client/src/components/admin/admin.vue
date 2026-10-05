@@ -103,5 +103,5 @@ p.adminMenu:hover {
   cursor: pointer;
 }
 </style>
-<style src="@/components/basic/css/common.css"></style>
-<style src="@/components/admin/css/admin.css"></style>
+<style src="@/components/basic/CSS/common.css"></style>
+<style src="@/components/admin/CSS/admin.css"></style>

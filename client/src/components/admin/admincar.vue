@@ -101,5 +101,5 @@ export default {
 };
 </script>
 
-<style src="@/components/basic/css/common.css"></style>
-<style src="@/components/admin/css/admincar.css"></style>
+<style src="@/components/basic/CSS/common.css"></style>
+<style src="@/components/admin/CSS/admincar.css"></style>

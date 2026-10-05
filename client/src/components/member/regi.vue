@@ -562,5 +562,5 @@ export default {
 };
 </script>
 
-<style src="@/components/basic/css/common.css"></style>
-<style src="@/components/member/css/regi.css"></style>
+<style src="@/components/basic/CSS/common.css"></style>
+<style src="@/components/member/CSS/regi.css"></style>

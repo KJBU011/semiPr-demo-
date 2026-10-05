@@ -148,5 +148,5 @@ export default {
 };
 </script>
 
-<style src="@/components/basic/css/common.css"></style>
-<style src="@/components/member/css/login.css"></style>
+<style src="@/components/basic/CSS/common.css"></style>
+<style src="@/components/member/CSS/login.css"></style>

@@ -136,5 +136,5 @@ export default {
 };
 </script>
 
-<style src="@/components/basic/css/common.css"></style>
-<style src="@/components/parking/css/parkingmap.css"></style>
+<style src="@/components/basic/CSS/common.css"></style>
+<style src="@/components/parking/CSS/parkingmap.css"></style>

@@ -60,5 +60,5 @@ export default {
 };
 </script>
 
-<style src="@/components/basic/css/common.css"></style>
-<style src="@/components/manager/css/manager.css"></style>
+<style src="@/components/basic/CSS/common.css"></style>
+<style src="@/components/manager/CSS/manager.css"></style>
