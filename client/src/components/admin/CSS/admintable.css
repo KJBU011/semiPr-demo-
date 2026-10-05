@@ -1,0 +1,430 @@
+/* ==========================================================================
+   Admin — Table
+   ========================================================================== */
+
+
+/* ==========================================================================
+   현재 입차 / 과거 차량 공통
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) {
+
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  box-sizing: border-box;
+
+}
+
+
+/* ==========================================================================
+   검색 영역
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) .adminsrch {
+
+  width: 100% !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  flex-wrap: nowrap !important;
+
+  gap: 7px !important;
+
+  margin: 0 0 8px !important;
+
+}
+
+
+/* ==========================================================================
+   검색 Select
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) .form-select {
+
+  width: 105px !important;
+
+  height: 32px !important;
+
+  padding: 5px 8px !important;
+
+  box-sizing: border-box !important;
+
+  border: 1px solid var(--color-border) !important;
+
+  border-radius: var(--radius-sm) !important;
+
+  background: #fff !important;
+
+  font-size: 12px !important;
+
+  color: var(--color-ink) !important;
+
+  margin: 0 !important;
+
+  flex-grow: 0 !important;
+
+  flex-shrink: 0 !important;
+
+}
+
+
+/* ==========================================================================
+   검색 input 영역
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) .search-input-area {
+
+  width: 250px !important;
+
+  flex-grow: 0 !important;
+
+  flex-shrink: 0 !important;
+
+  margin: 0 !important;
+
+}
+
+
+:is(#admincarhistory-page, #admincarnow-page) .form-control {
+
+  width: 100% !important;
+
+  height: 32px !important;
+
+  padding: 5px 9px !important;
+
+  box-sizing: border-box !important;
+
+  border: 1px solid var(--color-border) !important;
+
+  border-radius: var(--radius-sm) !important;
+
+  font-size: 12px !important;
+
+  margin: 0 !important;
+
+}
+
+
+/* ==========================================================================
+   검색 버튼
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) .btn.btn-primary {
+
+  height: 32px !important;
+
+  padding: 0 13px !important;
+
+  border: none !important;
+
+  border-radius: var(--radius-sm) !important;
+
+  background: #4b5694 !important; /* [수정] 틸 → 지정하신 색상 */
+
+  color: #fff !important;
+
+  font-size: 12px !important;
+
+  font-weight: 700 !important;
+
+  cursor: pointer !important;
+
+  margin: 0 !important;
+
+  flex-grow: 0 !important;
+
+  flex-shrink: 0 !important;
+
+  white-space: nowrap !important;
+
+}
+
+
+:is(#admincarhistory-page, #admincarnow-page) .btn.btn-primary:hover {
+
+  opacity: 0.9;
+
+}
+
+
+/* ==========================================================================
+   테이블 스크롤 영역
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) .table-scroll {
+
+  width: 100%;
+
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  box-sizing: border-box;
+
+}
+
+
+/* ==========================================================================
+   테이블
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) table {
+
+  width: 100%;
+
+  min-width: 1180px;
+
+  border-collapse: collapse;
+
+  table-layout: auto;
+
+  font-size: 11px;
+
+  background: #fff;
+
+}
+
+
+/* ==========================================================================
+   테이블 셀
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) table th,
+:is(#admincarhistory-page, #admincarnow-page) table td {
+
+  height: 26px;
+
+  padding: 4px 6px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  vertical-align: middle;
+
+  border: 1px solid var(--color-border);
+
+  white-space: nowrap;
+
+}
+
+
+/* ==========================================================================
+   테이블 헤더
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) table thead th {
+
+  height: 30px;
+
+  background: #0a2345; /* [수정] 틸 tint → 지정하신 색상 */
+
+  color: #fff; /* [수정] 어두운 배경에 맞춰 글자색을 흰색으로 변경 */
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+}
+
+
+/* ==========================================================================
+   테이블 데이터
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) table tbody td,
+:is(#admincarhistory-page, #admincarnow-page) table tbody th {
+
+  color: var(--color-ink);
+
+  font-weight: 400;
+
+}
+
+
+/* ==========================================================================
+   마우스 오버
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) table tbody tr:hover {
+
+  background: #eef0f8; /* [수정] 틸 tint(파스텔 초록빛) → 지정하신 색상 */
+
+}
+
+
+/* ==========================================================================
+   페이지 번호
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) .pagination {
+
+  width: 100% !important;
+
+  display: flex !important;
+
+  justify-content: center !important;
+
+  align-items: center !important;
+
+  gap: 6px !important;
+
+  padding-top: 5px !important;
+
+  margin: 0 !important;
+
+}
+
+
+:is(#admincarhistory-page, #admincarnow-page) .pagination a {
+
+  display: inline-flex !important;
+
+  align-items: center !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+}
+
+
+/* ==========================================================================
+   페이지 번호 공통
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) .pagination strong {
+
+  display: inline-block !important;
+
+  margin: 0 !important;
+
+  padding: 2px 6px !important;
+
+  font-size: 12px !important;
+
+  line-height: 20px !important;
+
+}
+
+
+/* ==========================================================================
+   선택된 페이지 — 지정하신 색상으로 사각형 배지
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) .pageSel {
+
+  display: inline-flex !important;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 24px;
+
+  height: 24px;
+
+  padding: 0 6px !important;
+
+  border-radius: var(--radius-sm); /* 사각형(모서리만 살짝 둥글게) */
+
+  background: #4b5694;
+
+  color: #fff !important;
+
+  font-weight: 800;
+
+}
+
+
+/* ==========================================================================
+   선택되지 않은 페이지
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) .pageDis {
+
+  color: var(--color-ink);
+
+  font-weight: 400;
+
+  cursor: pointer;
+
+}
+
+
+:is(#admincarhistory-page, #admincarnow-page) .pageDis:hover {
+
+  color: #4b5694;
+
+  text-decoration: underline;
+
+}
+
+
+/* ==========================================================================
+   이전 / 다음 버튼
+   ========================================================================== */
+
+:is(#admincarhistory-page, #admincarnow-page) .page-nav {
+
+  height: 26px;
+
+  padding: 0 14px;
+
+  border: none;
+
+  border-radius: var(--radius-sm);
+
+  background: #4b5694;
+
+  color: #fff;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+}
+
+
+:is(#admincarhistory-page, #admincarnow-page) .page-nav:disabled {
+
+  opacity: 0.4;
+
+  cursor: default;
+
+}
+
+
+/* ==========================================================================
+   작은 화면
+   ========================================================================== */
+
+@media (max-width: 700px) {
+
+  :is(#admincarhistory-page, #admincarnow-page) .adminsrch {
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+  }
+
+  :is(#admincarhistory-page, #admincarnow-page) .search-input-area {
+
+    width: 220px;
+
+  }
+
+}

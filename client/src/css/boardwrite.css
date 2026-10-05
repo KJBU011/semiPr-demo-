@@ -1,0 +1,110 @@
+/* ==========================================================================
+   boardwrite.css
+   금손 JeoldaeParking · 메디컬타워 주차관리시스템
+   담당 범위: boardwrite.vue
+   ========================================================================== */
+
+#boardwrite {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+}
+
+#boardwrite h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--color-ink);
+  margin: 0 0 6px;
+  text-align: center;
+  max-width: 100% !important;
+  width: 100%;
+}
+
+#boardwrite h3 {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-ink-soft);
+  font-weight: 400;
+  margin: 0 0 10px;
+  text-align: center;
+}
+
+/* ==================== form-row ==================== */
+#boardwrite .write-form {
+  margin-top: 25px;
+  border-top: 2px solid var(--color-navy-deep);
+  text-align: left;
+}
+
+#boardwrite .form-row {
+  display: flex;
+  border-bottom: 1px solid var(--color-line);
+}
+
+#boardwrite .form-row label {
+  width: 120px;
+  padding: 15px;
+  background: #eef0f8;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  font-family: var(--font-body);
+}
+
+#boardwrite .form-row input {
+  flex: 1;
+  padding: 10px;
+  margin: 7px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+#boardwrite .form-row input[readonly] {
+  background: var(--color-bg);
+  color: var(--color-ink-faint);
+  cursor: default;
+}
+
+#boardwrite .content-row textarea {
+  flex: 1;
+  min-height: 300px;
+  padding: 12px;
+  margin: 7px;
+  resize: vertical;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+/* ==================== 버튼 ==================== */
+.board-btn-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.board-btn-wrap .btn-primary {
+  background: #4B5694;
+  border-color: #4B5694;
+  color: #fff;
+}
+
+.board-btn-wrap .btn-primary:hover {
+  background: #3a4478;
+  border-color: #3a4478;
+}
+
+.board-btn-wrap .btn-outline-primary {
+  color: #4B5694;
+  border-color: #4B5694;
+  background: transparent;
+}
+
+.board-btn-wrap .btn-outline-primary:hover {
+  background: #eef0f8;
+}

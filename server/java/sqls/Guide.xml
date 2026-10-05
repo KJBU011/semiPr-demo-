@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.mbc.mtps.dao.GuideDao">        
+        
+<select id="searchCar" parameterType="String" resultType="com.mbc.mtps.dto.CarStatusDto">
+
+    select
+        member.car_num AS "car_num",
+        car.car_stat AS "car_stat",
+        space.floor AS "floor",
+        car.spc_no AS "spcNo",
+        car.ent_time AS "ent_time",
+        car.discnt_at AS "discnt_at"
+
+    from member
+
+    join car
+        ON member.id = car.id
+
+    left join space
+        ON car.spc_no = space.spc_no
+
+    where member.car_num like '%' || #{car_num} || '%' 
+      and car.car_stat IN (0, 1, 3)
+
+    order by car.ent_time DESC
+
+ 
+
+</select>
+
+</mapper>

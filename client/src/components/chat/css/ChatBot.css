@@ -1,0 +1,166 @@
+/* ChatBot.vue 전용 스타일
+   [수정 2026-08-12] 화면 우측 하단(bottom) 고정 -> 헤더 바로 아래(top) 고정으로 위치 변경.
+   [수정 2026-08-12] top: 110px일 때 네비게이션 바와 버튼이 겹쳐서 top: 270px로 조정.
+   [수정 2026-08-12] top: 270px가 네비바에서 너무 많이 떨어져서 top: 150px로 재조정 (네비 바로 아래, 살짝만 여백).
+   실제 헤더+네비게이션 높이에 맞춰 top 값을 조절하세요. */
+
+.chatbot-wrapper {
+  position: fixed;
+  top: 150px;   /* [수정 2026-08-12] 270px -> 150px, 네비바 바로 아래로 재조정 */
+  right: 20px;
+  z-index: 1000;
+}
+
+.chatbot-toggle {
+  padding: 10px 16px;
+  border-radius: 20px;
+  background-color: #0A2345; /* [수정 2026-08-12] #333 -> #0A2345 */
+  color: #fff;
+  cursor: pointer;
+}
+
+.chatbot-box {
+  position: absolute;
+  right: 0;
+  top: 50px;    /* [수정 2026-08-12] 버튼이 위쪽에 있으므로 채팅창은 버튼 "아래"로 펼쳐지게 변경 (기존 bottom: 50px) */
+  width: 340px; /* [수정 2026-08-12] 300px -> 340px, 챗봇 너비를 조금 더 넓힘 */
+  height: 400px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* [추가 2026-08-12] 위치가 콘텐츠 위로 겹치므로 그림자 살짝 추가 */
+}
+
+.chatbot-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 40px;
+  background: #0A2345; /* [수정 2026-08-12] #333 -> #0A2345 */
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.chatbot-close {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.chatbot-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.chatbot-msg-row {
+  /* [추가 2026-08-12] 메시지 + 아이콘을 한 줄에 배치하기 위한 wrapper */
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 8px;
+}
+
+.row-user {
+  justify-content: flex-end;
+}
+
+.row-bot {
+  justify-content: flex-start;
+}
+
+.chatbot-msg {
+  padding: 8px 10px;
+  border-radius: 8px;
+  max-width: 88%; /* [수정 2026-08-12] 80% -> 88%, 줄바꿈 여유 확보 */
+  font-size: 13px;
+  /* [추가 2026-08-12] 한글 단어(어절) 중간에서 줄바꿈되는 것 방지 */
+  word-break: keep-all;
+  overflow-wrap: break-word; /* 너무 긴 영단어/URL 등은 예외적으로 줄바꿈 */
+  white-space: pre-wrap; /* 줄바꿈 문자(\n)가 있으면 그대로 반영 */
+}
+
+.bot-avatar {
+  /* [추가 2026-08-12] 챗봇 메시지 아이콘 */
+  /* [수정 2026-08-12] 메시지 우측 -> 좌측 배치로 변경, margin-left -> margin-right */
+  width: 26px;
+  height: 26px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #fff;
+  padding: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.msg-user {
+  background-color: #0A2345; /* [수정 2026-08-12] #333 -> #0A2345 */
+  color: #fff;
+  margin-left: auto;
+}
+
+.user-avatar {
+  /* [추가 2026-08-12] 사용자 메시지 옆에 표시되는 아이콘 */
+  /* [수정 2026-08-12] 26px -> 32px, 아이콘 크기 확대 */
+  width: 32px;
+  height: 32px;
+  margin-left: 6px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.msg-bot {
+  background-color: #eee;
+  color: #333;
+}
+
+.chatbot-input-row {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+
+.chatbot-input-row input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+}
+
+.chatbot-input-row input:focus {
+  /* [추가 2026-08-12] 입력창 클릭 시 브라우저 기본 굵은 포커스 테두리 제거 */
+  outline: none;
+  box-shadow: none;
+}
+
+.chatbot-input-row button {
+  padding: 8px 12px;
+  cursor: pointer;
+  /* [추가 2026-08-12] 전송 버튼 색상 지정 */
+  background-color: #0A2345;
+  color: #fff;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.chatbot-input-row button:hover:not(:disabled) {
+  /* [추가 2026-08-12] 마우스 오버 시 색상 */
+  background-color: #404B5A;
+}
+
+.chatbot-input-row button:disabled {
+  /* [추가 2026-08-12] 비활성화 상태(입력값 없음/로딩중)는 색상 흐리게 처리 */
+  background-color: #999;
+  cursor: default;
+}

@@ -1,0 +1,188 @@
+/* ==========================================================================
+   Admin — Visit Car Statistics
+   ========================================================================== */
+
+
+/* ==========================================================================
+   전체 영역
+   ========================================================================== */
+
+#admincarbar-page {
+
+  width: 100%;
+
+  padding: 0;
+
+  margin: 0;
+
+  background: transparent;
+
+  border: none;
+
+  box-shadow: none;
+
+  box-sizing: border-box;
+
+}
+
+
+/* ==========================================================================
+   상단 영역
+   ========================================================================== */
+
+#admincarbar-page .header-area {
+
+  width: 100%;
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: center;
+
+  margin-bottom: 5px;
+
+}
+
+
+/* ==========================================================================
+   뒤로가기 버튼
+   ========================================================================== */
+
+#admincarbar-page .back-btn {
+
+  padding: 5px 10px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-sm);
+
+  background: #fff;
+
+  color: var(--color-primary-dark);
+
+  font-size: 11px;
+
+  cursor: pointer;
+
+}
+
+
+#admincarbar-page .back-btn:hover {
+
+  background: var(--color-primary-tint);
+
+}
+
+
+/* ==========================================================================
+   차트 영역
+   [수정] max-height + overflow:hidden 추가.
+   canvas-container를 150px로 고정해도, Chart.js가 반응형 리사이즈 계산을
+   할 때 초기 flex 레이아웃이 아직 자리잡기 전 값을 참조해서 그보다 큰
+   크기로 렌더링되는 경우가 있음 (특히 flex item 안에 있을 때 흔함).
+   그 결과로 chart-wrapper 자체가 필요 이상으로 커져서 카드 하단에
+   빈 여백이 남는 문제가 있었음 → wrapper 레벨에서 높이를 강제로 캡핑.
+   ========================================================================== */
+
+#admincarbar-page .chart-wrapper {
+
+  width: 100%;
+
+  max-height: 250px; /* [수정] 210px → 250px, 캔버스가 넉넉해진 만큼 캡도 함께 늘림 */
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+}
+
+
+/* ==========================================================================
+   차트 제목
+   ========================================================================== */
+
+#admincarbar-page h3 {
+
+  margin: 0;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  color: var(--color-ink);
+
+}
+
+
+/* ==========================================================================
+   안내 문구
+   ========================================================================== */
+
+#admincarbar-page .guide-text {
+
+  display: block;
+
+  margin-top: 3px;
+
+  margin-bottom: 5px;
+
+  font-size: 10px;
+
+  color: var(--color-muted);
+
+}
+
+
+/* ==========================================================================
+   ★ 그래프 높이
+   기존 280px → 약 150px
+   [수정] overflow:hidden 추가 — Chart.js가 캔버스를 150px보다 크게
+   그리려고 해도 컨테이너 밖으로 못 나가게 확실히 잘라냄
+   ========================================================================== */
+
+#admincarbar-page .canvas-container {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 180px !important; /* [수정] 150px → 180px, 범례+막대+날짜 라벨이 다 들어갈 여유 확보 */
+
+  box-sizing: border-box;
+
+}
+
+
+/* ==========================================================================
+   Canvas
+   ========================================================================== */
+
+#admincarbar-page .canvas-container canvas {
+
+  width: 100% !important;
+
+  height: 100% !important;
+
+}
+
+
+/* ==========================================================================
+   작은 화면
+   ========================================================================== */
+
+@media (max-width: 700px) {
+
+  #admincarbar-page .canvas-container {
+
+    height: 170px !important;
+
+  }
+
+  #admincarbar-page .chart-wrapper {
+
+    max-height: 240px;
+
+  }
+
+}

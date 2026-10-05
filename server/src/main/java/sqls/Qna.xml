@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mbc.mtps.dao.QnaDao">
+
+
+<!-- QNA 목록 -->
+<select id="qnaList"
+        parameterType="com.mbc.mtps.dto.QnaParam"
+        resultType="com.mbc.mtps.dto.QnaDto">
+
+    select seq, id, ref, step, depth, title, content, wdate, del, readcount
+    from qna
+
+    <if test="category != null and category != '' and keyword != null and keyword != ''">
+
+        <if test="category == 'title'">
+            where title like concat('%', #{keyword}, '%')
+        </if>
+
+        <if test="category == 'content'">
+            where content like concat('%', #{keyword}, '%')
+        </if>
+
+        <if test="category == 'writer'">
+            where id like concat('%', #{keyword}, '%')
+        </if>
+
+    </if>
+
+    order by ref desc, step asc
+
+    limit 10
+    offset (#{pageNumber} * 10)
+
+</select>
+
+
+<!-- QNA 글의 총수 -->
+<select id="getAllQna"
+        parameterType="com.mbc.mtps.dto.QnaParam"
+        resultType="Integer">
+
+    select count(*)
+    from qna
+
+    <if test="category != null and category != '' and keyword != null and keyword != ''">
+
+        <if test="category == 'title'">
+            where title like concat('%', #{keyword}, '%')
+        </if>
+
+        <if test="category == 'content'">
+            where content like concat('%', #{keyword}, '%')
+        </if>
+
+        <if test="category == 'writer'">
+            where id like concat('%', #{keyword}, '%')
+        </if>
+
+    </if>
+
+</select>
+
+
+<!-- QNA 글 작성 -->
+<insert id="qnaWrite"
+        parameterType="com.mbc.mtps.dto.QnaDto">
+
+    insert into qna(
+        id,
+        ref,
+        step,
+        depth,
+        title,
+        content,
+        wdate,
+        del,
+        readcount
+    )
+
+    values(
+        #{id},
+        (select coalesce(max(ref), 0) + 1 from qna),
+        0,
+        0,
+        #{title},
+        #{content},
+        now(),
+        0,
+        0
+    )
+
+</insert>
+
+
+<!-- QNA 상세보기 -->
+<select id="getQna"
+        parameterType="Integer"
+        resultType="com.mbc.mtps.dto.QnaDto">
+
+    select seq, id, ref, step, depth, title, content, wdate, del, readcount
+    from qna
+    where seq = #{seq}
+
+</select>
+
+
+<!-- QNA 수정 -->
+<update id="qnaUpdate"
+        parameterType="com.mbc.mtps.dto.QnaDto">
+
+    update qna
+    set title = #{title},
+        content = #{content}
+    where seq = #{seq}
+
+</update>
+
+
+<!-- QNA 삭제: 질문과 연결된 관리자 답변을 함께 삭제 -->
+<delete id="qnaDelete"
+        parameterType="Integer">
+
+    delete from qna
+    where ref = (
+        select ref
+        from qna
+        where seq = #{seq}
+    )
+
+</delete>
+
+
+<!-- 답글 자리 확보 -->
+<update id="qnaAnswerUpdate"
+        parameterType="com.mbc.mtps.dto.QnaDto">
+
+    update qna
+    set step = step + 1
+    where ref = (
+        select ref
+        from qna
+        where seq = #{seq}
+    )
+    and step > (
+        select step
+        from qna
+        where seq = #{seq}
+    )
+
+</update>
+
+
+<!-- 답글 작성 -->
+<insert id="qnaAnswerInsert"
+        parameterType="com.mbc.mtps.dto.QnaDto">
+
+    insert into qna(
+        id,
+        ref,
+        step,
+        depth,
+        title,
+        content,
+        wdate,
+        del,
+        readcount
+    )
+
+    values(
+        #{id},
+
+        (
+            select ref
+            from qna
+            where seq = #{seq}
+        ),
+
+        (
+            select step
+            from qna
+            where seq = #{seq}
+        ) + 1,
+
+        (
+            select depth
+            from qna
+            where seq = #{seq}
+        ) + 1,
+
+        #{title},
+        #{content},
+        now(),
+        0,
+        0
+    )
+
+</insert>
+
+<!-- 답글 작성자 권한 확인 -->
+<select id="getAuth"
+        parameterType="String"
+        resultType="Integer">
+
+    select auth
+    from member
+    where id = #{id}
+
+</select>
+
+<select id="getQnaAnswers"
+        parameterType="Integer"
+        resultType="com.mbc.mtps.dto.QnaDto">
+
+    select
+        seq,
+        id,
+        ref,
+        step,
+        depth,
+        title,
+        content,
+        wdate,
+        del,
+        readcount
+    from qna
+    where ref = #{ref}
+      and depth > 0
+      and del = 0
+    order by step asc
+
+</select>
+
+<!-- ==================== 조회수 증가 ==================== -->
+<update id="updateReadcount"
+        parameterType="Integer">
+
+    update qna
+    set readcount = readcount + 1
+    where seq = #{seq}
+
+</update>
+
+</mapper>

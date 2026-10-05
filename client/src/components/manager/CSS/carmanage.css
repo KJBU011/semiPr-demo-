@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Car management — search bar + result table
+   ========================================================================== */
+
+.manager-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* [추가] "CAR SEARCH" / "차량 정보 조회" 가운데 정렬 (carmanage.vue 안에서만 적용) */
+.manager-panel .panel-header {
+  align-items: center;
+  text-align: center;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center; /* [수정] 검색창+버튼을 가운데 정렬 */
+  transform: translateX(24px); /* [추가] 살짝 오른쪽으로 이동 */
+}
+
+.search-input {
+  flex: 1;
+  max-width: 320px;
+  padding: 11px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  transition: border-color 0.15s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.search-btn {
+  padding: 11px 22px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: #4b5694; /* [수정] var(--color-primary) → 지정하신 색상 */
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.search-btn:hover {
+  opacity: 0.9; /* [수정] var(--color-primary-dark) 대신 동일 색상에 밝기만 살짝 낮춤 */
+}
+
+.search-btn:active {
+  transform: scale(0.97);
+}
+
+.empty-msg {
+  font-size: 14px;
+  color: var(--color-muted);
+  padding: 24px 0;
+  text-align: center;
+}
+
+/* [추가] 테이블 컬럼(헤더) 배경색 — carmanage.vue 테이블에만 적용 */
+.manager-panel .data-table thead th {
+  background: #0a2345;
+  color: #fff;
+}
+
+/* [추가] 테이블 마우스 오버 색상 — carmanage.vue 테이블에만 적용 */
+.manager-panel .data-table tbody tr:hover {
+  background: #eef0f8;
+}
+
+.spc-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: #5d679e; /* [수정] #0a2345 → 지정하신 색상 */
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.discount-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #4e647d; /* [수정] 아이보리(#fffff0) → 흰 배경에서 안 보이던 문제로 지정하신 색상으로 변경 */
+  background: transparent;
+  color: #4e647d; /* [수정] 아이보리(#fffff0) → 흰 배경에서 안 보이던 문제로 지정하신 색상으로 변경 */
+  font-size: 12px;
+  font-weight: 700;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.discount-btn:hover {
+  background: #eef0f8; /* [수정] var(--color-accent) → 지정하신 색상 */
+  color: #0a2345; /* [수정] 밝은 배경에서도 글자가 잘 보이도록 네이비로 변경 */
+}

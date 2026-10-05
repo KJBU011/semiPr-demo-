@@ -1,0 +1,176 @@
+/* ==========================================================================
+   Registration — 일반/점주 tab switcher + sign-up forms
+   ✅ 수정: var(--color-primary) 계열 → 네이비(#4B5694) 직접 지정으로 통일
+   ✅ 수정: 카드 폭 확장 + 전화번호 3칸 한 줄 정렬 추가
+   ========================================================================== */
+
+#regi-tabs {
+  max-width: 480px;
+  margin: 48px auto 0;
+}
+
+#regi-tabs table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#regi-tabs table,
+#regi-tabs th,
+#regi-tabs td {
+  border: none;
+}
+
+#regi-tabs tr {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+#regi-tabs button {
+  padding: 11px 32px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #4B5694;
+  background: transparent;
+  color: #4B5694;
+  font-weight: 700;
+  font-size: 14px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+#regi-tabs button:hover {
+  background: #4B5694;
+  color: #fff;
+}
+
+/* ---- 일반/점주 회원가입 폼 카드 ---- */
+/* ✅ 수정: max-width 480px → 520px (전화번호 한 줄 정렬을 위한 여유 폭 확보) */
+:is(#regi-common, #regi-manager) {
+  max-width: 520px;
+  margin: 24px auto 64px;
+  padding: 28px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+:is(#regi-common, #regi-manager) h1 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--color-ink);
+  text-align: center;
+}
+
+:is(#regi-common, #regi-manager) hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
+:is(#regi-common, #regi-manager) table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+:is(#regi-common, #regi-manager) table,
+:is(#regi-common, #regi-manager) th,
+:is(#regi-common, #regi-manager) td {
+  border: none;
+}
+
+:is(#regi-common, #regi-manager) th {
+  text-align: left;
+  padding: 10px 8px 4px 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-muted);
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+:is(#regi-common, #regi-manager) td {
+  padding: 0 0 10px;
+}
+
+:is(#regi-common, #regi-manager) input {
+  padding: 9px 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  transition: border-color 0.15s ease;
+}
+
+/* ✅ 수정: var(--color-primary) → #4B5694 */
+:is(#regi-common, #regi-manager) input:focus {
+  outline: none;
+  border-color: #4B5694;
+}
+
+:is(#regi-common, #regi-manager) input[type="checkbox"] {
+  width: auto;
+}
+
+/* ✅ 수정: var(--color-primary-tint)/var(--color-primary-dark) → 네이비 계열 연한 배경/글자색 */
+:is(#regi-common, #regi-manager) input[type="button"] {
+  background: #eef0f8;
+  color: #3a4478;
+  border-color: #eef0f8;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ✅ 수정: var(--color-primary) → #4B5694 */
+:is(#regi-common, #regi-manager) input[type="button"]:hover {
+  background: #4B5694;
+  color: #fff;
+}
+
+/* ✅ 수정: var(--color-primary) → #4B5694 */
+:is(#regi-common, #regi-manager) button {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: #4B5694;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ✅ 수정: var(--color-primary-dark) → #3a4478 */
+:is(#regi-common, #regi-manager) button:hover {
+  background: #3a4478;
+}
+
+/* ✅ 수정: var(--color-primary) → #4B5694 */
+:is(#regi-common, #regi-manager) a {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: #4B5694;
+  padding-top: 4px;
+}
+
+:is(#regi-common, #regi-manager) a:hover {
+  text-decoration: underline;
+}
+
+:is(#regi-common, #regi-manager) ul {
+  padding-left: 4px;
+}
+
+/* ✅ 추가: 전화번호 3칸(010-0000-0000) 한 줄 정렬용 */
+.phone-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.phone-group input {
+  width: 60px;
+  flex: none;
+}

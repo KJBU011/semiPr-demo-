@@ -1,0 +1,89 @@
+/* ==========================================================================
+   Medical Tower Parking System — Design Tokens
+   Concept: hospital-grade trust (teal) + parking signage guidance (amber),
+   expressed through building-directory typography and gate/barrier motifs.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  /* Color */
+  --color-ink: #14282b;         /* primary text, near-black teal */
+  --color-bg: #f5f8f7;          /* clinical mist background */
+  --color-surface: #ffffff;     /* cards / raised surfaces */
+  --color-primary: #0e6b67;     /* medical teal */
+  --color-primary-dark: #0a4f4c;
+  --color-primary-tint: #e4f0ef;
+  --color-accent: #f5a623;      /* parking signage amber */
+  --color-accent-dark: #d98c0f;
+  --color-border: #d8e3e1;
+  --color-muted: #5c7370;
+
+  /* Type */
+  --font-display: 'Noto Sans KR', -apple-system, sans-serif;
+  --font-body: 'Noto Sans KR', -apple-system, sans-serif;
+  --font-mono: 'Space Mono', 'SFMono-Regular', monospace;
+
+  /* Layout */
+  --header-height: 60px;
+  --nav-height: 64px;
+  --max-width: 1120px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --shadow-soft: 0 4px 20px rgba(14, 107, 103, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* [수정] App.vue가 Header.vue/Nav.vue/Footer.vue를 <header>/<nav>/<footer>로
+   한 번 더 감싸고 있어서, 그 바깥 래퍼 태그에 여백이 없도록 명시적으로 리셋.
+   실제 박스 스타일(배경/높이/sticky 등)은 안쪽 .site-header/.nav/.site-footer
+   쪽 CSS에서 담당한다. max-width도 함께 리셋하는 이유: 팀원분의 Basic.css
+   등 다른 파일에 남아있는 `main, .content { max-width: ...; margin:0 auto }`
+   같은 규칙이 있으면, margin은 여기서 0으로 덮어써지지만 max-width는 그대로
+   남아 <main>이 화면 왼쪽으로 붙은 채 폭만 줄어드는 문제가 생김 → 함께 리셋. */
+header,
+nav,
+main,
+footer {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  max-width: none !important;
+  display: block !important;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

@@ -1,0 +1,35 @@
+============================== 마이 페이지 =================================
+마이페이지 회원 정보
+GET  /getMember			
+Parameter: id
+Return: MemberDto
+
+현재 차량 상태와 위치 정보
+GET  /getCarStatus
+Parameter: id
+Return: CarStatusDto
+
+내 차량 이용 내역
+GET	/	getParkingHistory
+Parameter: id
+Return: List<CarStatusDto>
+
+비밀번호 변경
+POST /updatePw
+Parameter: id, pw
+Return: boolean
+
+전화번호 변경
+POST /updatePhone
+Parameter: id, phone
+Return: boolean
+
+이메일 변경
+POST /updateEmail
+Parameter: id, email
+Return: boolean
+
+차량정보 변경
+POST /updateCar
+Parameter: id, carNum, carType
+Return: boolean

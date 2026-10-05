@@ -1,0 +1,26 @@
+# IDE workspace (로컬 캐시 — 절대 커밋 금지)
+.metadata/
+
+# frontend
+client/node_modules/
+client/dist/
+client/dist-ssr/
+client/*.local
+
+# backend
+server/target/
+
+# env (API 키·DB 비번 — 절대 커밋 금지)
+client/.env
+client/.env.local
+server/.env
+
+# editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# logs
+*.log

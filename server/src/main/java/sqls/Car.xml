@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbc.mtps.dao.CarDao">
+	
+<!--================================== 점주 페이지 =================================-->
+
+	<!-- 차량번호 뒤 4자리 검색 -->
+	<select id="getCarNum" parameterType="String" resultType="com.mbc.mtps.dto.CarDto">
+        SELECT c.ent_time, c.id, c.car_stat, c.ex_time, c.cost, c.spc_no,
+               c.discnt_at, m.car_num, c.car_id
+        FROM car c
+        JOIN member m ON c.id = m.id
+        WHERE m.car_num LIKE CONCAT('%', #{carNum}) AND c.car_stat = 1
+        ORDER BY c.ent_time DESC
+    </select>
+    
+    <!-- 할인 등록 -->
+    <update id="applyDiscount">
+        UPDATE car
+        SET discnt_at = NOW(),
+            discnt_owner_id = #{ownerId}
+        WHERE car_id = #{carId}
+    </update>
+    
+    <!-- 점주의 할인 가능 시간(discnt_time) 2시간 차감 -->
+    <!-- discnt_time이 2 미만이면 UPDATE 안 되도록(0건) 방어 -->
+    <update id="decreaseOwnerTime" parameterType="String">
+        UPDATE member
+        SET discnt_time = discnt_time - 2
+        WHERE id = #{ownerId} AND discnt_time >= 2
+    </update>
+    
+    <!-- 할인 지급 내역 리스트 -->
+    <select id="getDiscountList" resultType="com.mbc.mtps.dto.CarDto">
+        SELECT c.ent_time, c.id, c.car_stat, c.ex_time, c.cost, c.spc_no,
+               c.discnt_at, m.car_num
+        FROM car c
+        JOIN member m ON c.id = m.id
+        WHERE c.discnt_at IS NOT NULL
+        ORDER BY c.discnt_at DESC
+    </select>
+    
+    <!-- 금일 가게 방문 차량 수 (해당 점주가 오늘 할인해준 차량 리스트) -->
+    <select id="getTodayVisitCount" parameterType="String" resultType="com.mbc.mtps.dto.CarDto">
+	    SELECT c.car_id, c.ent_time, c.id, c.car_stat, c.ex_time, c.cost, c.spc_no, c.discnt_at,
+	     		c.discnt_owner_id, m.car_num
+	    FROM car c
+	    JOIN member m ON c.id = m.id
+	    WHERE c.discnt_owner_id = #{ownerId}
+	      AND c.discnt_at >= CURRENT_DATE
+	      AND c.discnt_at &lt; CURRENT_DATE + INTERVAL '1 day'
+	    ORDER BY c.discnt_at DESC
+	</select>
+	
+<!--================================== 관리자 페이지 =================================-->
+
+	<!-- 금일 입/출차 수 -->
+	<select id="getTodayInOutCount" resultType="map">
+        SELECT
+            COUNT(CASE WHEN c.ent_time >= CURRENT_DATE AND c.ent_time &lt; CURRENT_DATE + INTERVAL '1 day' THEN 1 END) AS entry_count,
+            COUNT(CASE WHEN c.ex_time >= CURRENT_DATE AND c.ex_time &lt; CURRENT_DATE + INTERVAL '1 day' THEN 1 END) AS exit_count
+        FROM car c
+    </select>
+    
+    <!-- 출차 차량 제외 차량 리스트 -->
+    <select id="carList" resultType="com.mbc.mtps.dto.CarDto">
+        SELECT m.car_num, c.spc_no, c.ent_time, c.car_stat, c.discnt_at, c.cost, c.id, m.name, m.car_type, m.auth
+        FROM car c
+        JOIN member m ON c.id = m.id
+        <where>
+            c.car_stat &lt;&gt; 2
+            <if test="category != null and category != '' and keyword != null and keyword != ''">
+                <choose>
+                    <when test="category == 'id'">
+                        AND c.id = #{keyword}
+                    </when>
+                    <when test="category == 'name'">
+                        AND m.name = #{keyword}
+                    </when>
+                    <when test="category == 'carNum'">
+                        AND m.car_num LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+        ORDER BY c.ent_time DESC
+        LIMIT 10 OFFSET (#{pageNum} - 1) * 10
+    </select>
+
+	<!-- 출차 차량 제외 차량 수 -->
+    <select id="carCount" resultType="int">
+        SELECT count(*)
+        FROM car c
+        JOIN member m ON c.id = m.id
+        <where>
+            c.car_stat &lt;&gt; 2
+            <if test="category != null and category != '' and keyword != null and keyword != ''">
+                <choose>
+                    <when test="category == 'id'">
+                        AND c.id = #{keyword}
+                    </when>
+                    <when test="category == 'name'">
+                        AND m.name = #{keyword}
+                    </when>
+                    <when test="category == 'carNum'">
+                        AND m.car_num LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </select>
+    
+    <!-- 출차 차량 리스트 -->
+    <select id="exitCarList" resultType="com.mbc.mtps.dto.CarDto">
+        SELECT m.car_num, c.spc_no, c.ent_time, c.ex_time, c.car_stat, c.discnt_at, c.cost, c.id, m.name, m.car_type, m.auth
+        FROM car c
+        JOIN member m ON c.id = m.id
+        <where>
+            c.car_stat = 2
+            <if test="category != null and category != '' and keyword != null and keyword != ''">
+                <choose>
+                    <when test="category == 'id'">
+                        AND c.id = #{keyword}
+                    </when>
+                    <when test="category == 'name'">
+                        AND m.name = #{keyword}
+                    </when>
+                    <when test="category == 'carNum'">
+                        AND m.car_num LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+        ORDER BY c.ent_time DESC
+        LIMIT 10 OFFSET (#{pageNum} - 1) * 10
+    </select>
+    
+    <!-- 출차 차량 수 -->
+    <select id="exitCarCount" resultType="int">
+        SELECT count(*)
+        FROM car c
+        JOIN member m ON c.id = m.id
+        <where>
+            c.car_stat = 2
+            <if test="category != null and category != '' and keyword != null and keyword != ''">
+                <choose>
+                    <when test="category == 'id'">
+                        AND c.id = #{keyword}
+                    </when>
+                    <when test="category == 'name'">
+                        AND m.name = #{keyword}
+                    </when>
+                    <when test="category == 'carNum'">
+                        AND m.car_num LIKE CONCAT('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </select>
+    
+    <!-- 시간별 차량 방문 통계 (파라미터로 받은 특정 날짜, 0~23시를 1시간 단위로) -->
+    <select id="hourStat" resultType="map">
+        SELECT h.hour AS hour, COUNT(c.ent_time) AS cnt
+        FROM generate_series(0, 23) AS h(hour)
+        LEFT JOIN car c
+            ON EXTRACT(HOUR FROM c.ent_time) = h.hour
+            AND c.ent_time >= #{date}::date
+            AND c.ent_time &lt; #{date}::date + INTERVAL '1 day'
+        GROUP BY h.hour
+        ORDER BY h.hour
+    </select>
+    
+    <!-- 일별 차량 방문 통계 (최근 7일, 날짜+요일별, 오늘 제외) -->
+    <select id="dayStat" resultType="map">
+        SELECT d.stat_date AS stat_date,
+               EXTRACT(DOW FROM d.stat_date) AS dow,
+               COUNT(c.ent_time) AS cnt
+        FROM generate_series(CURRENT_DATE - INTERVAL '7 day', CURRENT_DATE - INTERVAL '1 day', INTERVAL '1 day') AS d(stat_date)
+        LEFT JOIN car c
+            ON DATE(c.ent_time) = d.stat_date
+        GROUP BY d.stat_date
+        ORDER BY d.stat_date
+    </select>
+    
+</mapper>

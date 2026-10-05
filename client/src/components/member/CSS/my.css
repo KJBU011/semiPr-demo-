@@ -1,0 +1,293 @@
+.member-page {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.info-list {
+  text-align: left;
+  max-width: 300px;
+  margin: 0 auto;
+  padding-left: 20px;
+}
+
+.info-list p {
+  margin-bottom: 8px;
+}
+
+.empty {
+  text-align: center;
+  color: #888;
+}
+
+/* [추가] 현재 주차 구역 텍스트 스타일 */
+.parking-location {
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+/* [추가] 회원정보 변경 버튼 영역: 기본정보 리스트 아래, 가운데 정렬 */
+.edit-move {
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* [추가] 회원정보 변경 버튼 스타일 */
+.btn-edit-move {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+/* [8/7 추가] 정산 버튼 영역 */
+.settle-move {
+  text-align: center;
+  margin: 12px 0;
+}
+/* [8/7 추가] */
+.btn-settle {
+  padding: 8px 16px;
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+}
+
+/* [8/7 추가] 정산 완료 안내 모달 스타일 */
+/* 화면 전체를 덮는 반투명 배경. position:fixed라 스크롤해도 항상 화면 중앙에 고정됨 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* [8/7 추가] 모달 내용 박스: 흰 배경, 둥근 모서리, 가운데 정렬된 텍스트 */
+.modal-box {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* [추가] 과거 이용 내역 페이지네이션 영역 */
+/* [수정] 바깥쪽은 가운데 정렬만 담당 (block + text-align:center) */
+.pagination-wrap {
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* [수정] inline-flex로 내용물(버튼+숫자+버튼) 크기만큼만 차지하게 해서
+     좌우로 벌어지지 않고 서로 붙어있도록 함 */
+.pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-btn {
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+/* 비활성화된(첫/마지막 페이지) 버튼 스타일 */
+.page-btn:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.page-info {
+  font-size: 14px;
+  color: #555;
+}
+
+/* ==========================================================================
+   위는 원본 스타일, 아래는 디자인 토큰 테마 오버라이드
+   ========================================================================== */
+
+/* ==========================================================================
+   My page — brand theme overrides
+   (원본 my-original.css 뒤에 로드되어 같은 선택자를 덮어씁니다)
+   ========================================================================== */
+
+.member-page {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  --color-navy: #0a2345;
+  --color-navy-tint: #e7eaf0;
+}
+
+/* [수정] 기본정보를 "라벨 우측정렬 | 구분선 | 값 좌측정렬" 2단 레이아웃으로 변경 */
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 420px;
+  margin: 0 auto;
+  padding-left: 0;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+}
+
+.info-label {
+  flex: 0 0 140px;
+  text-align: right;
+  padding-right: 16px;
+  border-right: 1px solid var(--color-border);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.info-value {
+  flex: 1;
+  text-align: left;
+  padding-left: 16px;
+  color: var(--color-muted);
+}
+
+/* [추가] 기본정보 글자 크기 확대 */
+.info-list p {
+  font-size: 14px;
+}
+
+.info-label,
+.info-value {
+  font-size: 17px;
+}
+
+.member-page h2,
+.member-page h3 {
+  font-family: var(--font-display);
+}
+
+.empty {
+  color: var(--color-muted);
+}
+
+.btn-edit-move {
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-navy); /* [수정] 틸 → 네이비 */
+  background: transparent;
+  color: var(--color-navy); /* [수정] 틸 → 네이비 */
+  font-weight: 700;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn-edit-move:hover {
+  background: #4b5694; /* [수정] 네이비 → 지정하신 색상 */
+  color: #fff;
+}
+
+.btn-settle {
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-navy); /* [수정] 틸 → 네이비 */
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn-settle:hover {
+  background-color: #061733; /* [수정] 네이비보다 한 톤 더 짙게 */
+}
+
+.modal-box {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+.page-btn {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-muted);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.page-btn:not(:disabled):hover {
+  border-color: var(--color-navy); /* [수정] 틸 → 네이비 */
+  color: var(--color-navy); /* [수정] 틸 → 네이비 */
+}
+
+.page-info {
+  color: var(--color-muted);
+}
+
+/* [추가] 페이지 전체 카드 처리 (회원 정보 수정 페이지와 톤 통일) */
+.member-page {
+  max-width: 640px;
+  padding: 32px 40px 40px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  margin-top: 32px;
+  margin-bottom: 64px;
+}
+
+.member-page h2 {
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.member-page h3 {
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.member-page hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
+/* [추가] 현재 주차 상태 / 과거 이용 내역 테이블 — data-table 톤으로 통일 */
+.member-page table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.member-page table,
+.member-page table th,
+.member-page table td {
+  border: none;
+}
+
+.member-page table thead th {
+  text-align: left;
+  padding: 12px 14px;
+  background: var(--color-navy-tint); /* [수정] 틸 tint → 네이비 tint */
+  color: var(--color-navy); /* [수정] 틸 → 네이비 */
+  font-weight: 700;
+  font-size: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.member-page table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-ink);
+}
+
+.member-page table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.member-page table tbody tr:hover td {
+  background: var(--color-bg);
+}

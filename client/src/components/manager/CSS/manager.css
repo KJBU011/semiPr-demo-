@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Manager page — header + content shell
+   (메뉴는 nav.vue의 "점주 페이지" hover 드롭다운으로 이동)
+   ========================================================================== */
+
+#manager-page {
+  min-height: 100%;
+  background: var(--color-bg);
+}
+
+.page-body {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 12px 24px 24px; /* [수정] 하단 패딩 64px → 24px, content 하단 패딩과 겹쳐 92px로 벌어지던 문제 축소 */
+}
+
+.content {
+  min-height: 560px; /* 탭 전환 시 페이지 높이가 흔들리지 않도록 고정 */
+  background: var(--color-surface);
+  background-image: url('@/assets/bg-car.png');
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px 28px; /* [수정] 하단 패딩 28px → 16px, 위 page-body 하단 패딩 축소와 함께 전체 빈 공간 줄임 */
+  box-shadow: var(--shadow-soft);
+}

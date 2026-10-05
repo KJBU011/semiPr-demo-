@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mbc.mtps.dao.CarDao">
+	
+<!--================================== 점주 페이지 =================================-->
+
+	<!-- 차량번호 뒤 4자리 검색 -->
+	<select id="getCarNum" parameterType="String" resultType="com.mbc.mtps.dto.CarDto">
+        SELECT c.ent_time, c.id, c.car_stat, c.ex_time, c.cost, c.spc_no,
+               c.discnt_at, m.car_num
+        FROM car c
+        JOIN member m ON c.id = m.id
+        WHERE m.car_num LIKE CONCAT('%', #{car_num}) AND c.car_stat = 1
+        ORDER BY c.ent_time DESC
+    </select>
+    
+    <!-- 할인 등록 -->
+    <update id="applyDiscount" parameterType="java.sql.Timestamp">
+        UPDATE car
+        SET discnt_at = NOW()
+        WHERE ent_time = #{ent_time}
+    </update>
+    
+    <!-- 할인 취소 -->
+    <update id="cancelDiscount" parameterType="java.sql.Timestamp">
+        UPDATE car
+        SET discnt_at = NULL
+        WHERE ent_time = #{ent_time}
+    </update>
+    
+    <!-- 할인 지급 내역 리스트 -->
+    <select id="getDiscountList" resultType="com.mbc.mtps.dto.CarDto">
+        SELECT c.ent_time, c.id, c.car_stat, c.ex_time, c.cost, c.spc_no,
+               c.discnt_at, m.car_num
+        FROM car c
+        JOIN member m ON c.id = m.id
+        WHERE c.discnt_at IS NOT NULL
+        ORDER BY c.discnt_at DESC
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Parking map — floor-by-floor space grid
+   [수정] "비어 있음" 좌석 색상을 기존 틸 tint에서 네이비 tint로 교체
+   (parking.css의 .parking-search 안에서 렌더링되므로 그 스코프의
+   --color-navy/--color-navy-tint를 그대로 상속받아 씀)
+   ========================================================================== */
+
+.parking-map {
+  width: 100%; /* [수정] 부모(.parking-search) 폭을 다 차지해야 justify-content:center가
+                   실제로 중앙 정렬로 보임 (안 그러면 콘텐츠 폭만큼만 차지해서
+                   center를 줘도 시각적으로 왼쪽에 붙어 보일 수 있음) */
+  box-sizing: border-box;
+  gap: 40px !important;
+  padding: 24px;
+}
+
+.parking-map h3 {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 8px;
+}
+
+.parking-map table {
+  border-collapse: collapse !important;
+}
+
+.parking-map table,
+.parking-map th,
+.parking-map td {
+  border: none !important;
+}
+
+.parking-map td {
+  width: 64px;
+  height: 64px;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: var(--radius-sm) !important;
+  font-size: 11px;
+  padding: 4px !important;
+}
+
+.parking-map td.empty {
+  background: var(--color-navy-tint, #e7eaf0); /* [수정] 틸 tint → 네이비 tint */
+  color: var(--color-navy, #0a2345) !important; /* [수정] 틸 → 네이비 */
+}
+
+.parking-map td.used {
+  background: #fbe4e0;
+  color: #c0392b !important;
+}

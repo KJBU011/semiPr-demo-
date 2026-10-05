@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mbc.mtps.dao.MemberDao">
+
+<!--============================== 로그인/회원가입 페이지 =================================-->
+	
+	<!-- 회원가입 -->
+    <insert id="addMember" parameterType="com.mbc.mtps.dto.MemberDto">
+
+        insert into member
+        (id, pw, name, discnt_time, phone, email, auth, car_num, car_type)
+        values
+        (#{id}, #{pw}, #{name}, 200, #{phone}, #{email}, #{auth}, #{carNum}, #{carType})
+
+    </insert>
+
+    <!-- 로그인 -->
+    <select id="login"
+            parameterType="String"
+            resultType="com.mbc.mtps.dto.MemberDto">
+
+        select id, pw, name, discnt_time AS discntTime,
+               phone, email, auth, car_num AS carNum,car_type As carType
+        from member
+        where id=#{id}
+
+    </select>
+
+
+<!--============================== 마이 페이지 =================================-->
+    
+    <!-- 아이디 중복 체크, 마이페이지 회원정보, 점주 페이지 점주 여부 확인 -->
+    <select id="getMember" parameterType="String" resultType="com.mbc.mtps.dto.MemberDto">
+
+        select id, name, discnt_time,
+               phone, email, auth, car_num, car_type
+        from member
+        where id=#{id}
+    </select>
+    
+	<!-- 현재 차량 상태와 주차 위치 조회 -->
+	<select id="getCarStatus" parameterType="string" resultType="com.mbc.mtps.dto.CarStatusDto">
+	
+	    select
+	        car.car_stat AS "car_stat",
+	        car.spc_no AS "spc_no",
+	        space.floor AS "floor",
+	        car.ent_time AS "ent_time",
+	        car.discnt_at AS "discnt_at",
+	        member.auth AS "auth"
+	
+	    from car
+	
+	    join member
+	        on car.id = member.id
+	
+	    left join space
+	        on car.spc_no = space.spc_no
+	
+	    where car.id = #{id}
+	
+	    order by car.ent_time desc
+	
+	    limit 1
+	
+	</select>
+	
+	<!-- 내 차량 이용 내역 -->
+	<!-- parameterType="String" 삭제 -->
+	<select id="getParkingHistory" resultType="com.mbc.mtps.dto.CarStatusDto">
+		
+		select 
+			ent_time AS "ent_time",
+	        ex_time AS "ex_time",
+	        cost AS "cost",
+	        discnt_at AS "discnt_at"
+		from car
+		where id = #{id}
+			and ex_time is not null
+		order by ex_time desc
+		limit 3 offset (#{pageNum} - 1) * 3 <!--[수정]-->
+		
+	</select>
+
+	<!-- [추가] 내 차량 이용 내역 전체 건수 (전체 페이지 수 계산용) -->
+	<select id="getParkingHistoryCount" parameterType="String" resultType="int">
+
+    		select count(*)
+    		from car
+    		where id = #{id}
+        	and ex_time is not null
+
+	</select>
+	
+	<!-- 정산 처리: 이 회원의 가장 최근 미정산 건(입차/주차 중)을 정산(3) 상태로 바꾸고 확정 금액 저장 -->
+	<!--"settleParking"이 car_stat in (0, 1)인 것을 찾아서 3으로 바꿈.-->
+	<!--"autoExitParking"이 car_stat = 3인 것을 찾아서 2로 바꿈.-->
+	<!--"settleParking"이 방금 만들어놓은 결과(car_stat = 3)가, 곧바로 "autoExitParking"이 찾는 조건(car_stat = 3)과 정확히 일치하도록 짜여있음.-->
+	<update id="settleParking" parameterType="map">
+
+    	update car
+    	<!--상태를 정산으로 바꾸고, 프론트/서비스단에서 미리 계산해서 넘겨준 cost값을 그대로 확정금액으로 저장.-->
+    	set car_stat = 3, cost = #{cost} 
+    	where ent_time = (<!--이 회원의 여러 주차 기록 중, 아직 정산 안된(0 or 1)것 중 가장 최근 것 하나를 먼저 찾아서 그 행만 업데이트함.-->
+        	select ent_time from car
+        	where id = #{id} and car_stat in (0, 1)
+        	order by ent_time desc
+        	limit 1
+    	)
+	</update>
+	
+	<!-- 출차 처리: 정산 완료(3) 상태인 가장 최근 건을 출차(2)로 전환하고 출차시각 기록 -->
+	<!--"autoExitParking" 필요 이유 : "정산 완료 후 5분 이내 출차하지 않으면 추가 요금"이라는 정책을 구현해야함.
+		5분이 지났을 때 자동으로 car_stat을 2(출차)로 바꾸고, ex_time(출차시각)을 기록해야함-->
+	<update id="autoExitParking" parameterType="String">
+
+    	update car
+    	<!--상태를 출차로 바꾸고, 출차 시각을 지금 이 쿼리가 실행되는 순간으로 기록한다.-->
+    	set car_stat = 2, ex_time = NOW()
+    	where ent_time = (
+		<!--"정산 완료(3) 상태인 것 중 가장 최근 것"을 찾는다. "settleParking"이 방금 3으로 바꿔놓은 바로 그 행을 정확히 다시 찾아서 처리함.-->
+		<!--"settleParking"이 방금 3으로 바꿔놓은 바로 그 행을 정확히 다시 찾아서 처리하는 이유 
+			우연히 같은 행을 찾는게 아니라, 두 쿼리의 where조건이 서로 이어지도록 의도적으로 설계했기 떄문.-->
+        	select ent_time from car
+        	<!--아래 where절이 회원의 여러 기록 중에서, 지금 이 순간 car_stat가 3(정산 완료)인 것들 중 가장 최근 것을 찾는 것.-->
+        	where id = #{id} and car_stat = 3
+        	order by ent_time desc
+        	limit 1
+    	)
+	</update>
+
+     <!-- 비밀번호 변경 -->
+    <update id="updatePw" parameterType="com.mbc.mtps.dto.MemberDto">
+
+        update member
+        set pw=#{pw}
+        where id=#{id}
+
+    </update>
+
+    <!-- 전화번호 변경 -->
+    <update id="updatePhone" parameterType="com.mbc.mtps.dto.MemberDto">
+
+        update member
+        set phone=#{phone}
+        where id=#{id}
+
+    </update>
+
+    <!-- 이메일 변경 -->
+    <update id="updateEmail" parameterType="com.mbc.mtps.dto.MemberDto">
+
+        update member
+        set email=#{email}
+        where id=#{id}
+
+    </update>
+
+    <!-- 차량번호와 전기차 여부 변경 -->
+    <update id="updateCar" parameterType="com.mbc.mtps.dto.MemberDto">
+
+        update member
+        set car_num=#{carNum},
+            car_type=#{carType}
+        where id=#{id}
+
+    </update>
+    
+<!--================================== 점주 페이지 =================================-->
+
+<!--================================== 관리자 페이지 =================================-->
+
+	<!-- 점주 목록 조회 -->
+    <select id="OwnerList" resultType="com.mbc.mtps.dto.MemberDto">
+	    select id, name, discnt_time, phone, email, auth, car_num, car_type
+	    from member
+	    <where>
+	        auth = 2
+	        <if test="category != null and category != '' and keyword != null and keyword != ''">
+	            <choose>
+	                <when test="category == 'id'">
+	                    and id = #{keyword}
+	                </when>
+	                <when test="category == 'name'">
+	                    and name = #{keyword}
+	                </when>
+	                <when test="category == 'carNum'">
+	                    and car_num like concat('%', #{keyword}, '%')
+	                </when>
+	            </choose>
+	        </if>
+	    </where>
+	    order by id
+	    limit 10 offset (#{pageNum} - 1) * 10
+	</select>
+    
+    <!-- 일반 회원 목록 조회 -->
+    <select id="MemberList" resultType="com.mbc.mtps.dto.MemberDto">
+        select id, name, phone, email, auth, car_num, car_type
+        from member
+        <where>
+         	auth = 3
+        	<if test="category != null and category != '' and keyword != null and keyword != ''">
+	            <choose>
+	                <when test="category == 'id'">
+	                    and id = #{keyword}
+	                </when>
+	                <when test="category == 'name'">
+	                    and name = #{keyword}
+	                </when>
+	                <when test="category == 'carNum'">
+	                    and car_num like concat('%', #{keyword}, '%')
+	                </when>
+	            </choose>
+	        </if>
+	    </where>
+        order by id
+        limit 10 offset (#{pageNum} - 1) * 10
+    </select>
+    
+    <!-- 점주 회원 수 -->
+    <select id="ownerCount" resultType="int">
+        select count(*) from member
+        <where>
+         	auth = 2
+        	<if test="category != null and category != '' and keyword != null and keyword != ''">
+	            <choose>
+	                <when test="category == 'id'">
+	                    and id = #{keyword}
+	                </when>
+	                <when test="category == 'name'">
+	                    and name = #{keyword}
+	                </when>
+	                <when test="category == 'carNum'">
+	                    and car_num like concat('%', #{keyword}, '%')
+	                </when>
+	            </choose>
+	        </if>
+	    </where>
+    </select>
+    
+    <!-- 일반 회원 수 -->
+    <select id="memberCount" resultType="int">
+        select count(*) from member
+        <where>
+         	auth = 3
+        	<if test="category != null and category != '' and keyword != null and keyword != ''">
+	            <choose>
+	                <when test="category == 'id'">
+	                    and id = #{keyword}
+	                </when>
+	                <when test="category == 'name'">
+	                    and name = #{keyword}
+	                </when>
+	                <when test="category == 'carNum'">
+	                    and car_num like concat('%', #{keyword}, '%')
+	                </when>
+	            </choose>
+	        </if>
+	    </where>
+    </select>                                                                      
+    
+    <!-- 관리자에 의한 회원정보 수정 (일반회원/점주 공용) -->
+    <update id="updateMemberByAdmin" parameterType="com.mbc.mtps.dto.MemberDto">
+        update member
+        set name = #{name},
+            phone = #{phone},
+            email = #{email},
+            car_num = #{carNum},
+            car_type = #{carType},
+            discnt_time = #{discntTime}
+        where id = #{id}
+    </update>
+    
+    <!-- 회원 삭제 (일반회원/점주 공용)
+         id, pw를 각각 무작위 문자열(UUID)로 교체(탈퇴한 아이디 재사용 허용, 로그인 불가 처리) 
+         + auth=0(삭제됨) -->
+    <update id="deleteMember" parameterType="map">
+        update member
+        set id = #{new},
+            pw = #{new},
+            auth = 0
+        where id = #{old}
+    </update>
+
+</mapper>

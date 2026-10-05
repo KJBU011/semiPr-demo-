@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mbc.mtps.dao.MemberDao">
+
+<!--============================== 로그인/회원가입 페이지 =================================-->
+	
+	<!-- 회원가입 -->
+    <insert id="addMember" parameterType="com.mbc.mtps.dto.MemberDto">
+
+        insert into member
+        (id, pw, name, discnt_time, phone, email, auth, car_num, car_type)
+        values
+        (#{id}, #{pw}, #{name}, 200, #{phone}, #{email}, #{auth}, #{car_num}, #{car_type})
+
+    </insert>
+
+    <!-- 로그인 -->
+    <select id="login"
+            parameterType="com.mbc.mtps.dto.MemberDto"
+            resultType="com.mbc.mtps.dto.MemberDto">
+
+        select id, name, discnt_time,
+               phone, email, auth, car_num, car_type
+        from member
+        where id=#{id}
+          and pw=#{pw}
+
+    </select>
+
+
+<!--============================== 마이 페이지 =================================-->
+    
+    <!-- 아이디 중복 체크, 마이페이지 회원정보, 점주 페이지 점주 여부 확인 -->
+    <select id="getMember" parameterType="String" resultType="com.mbc.mtps.dto.MemberDto">
+
+        select id, name, discnt_time,
+               phone, email, auth, car_num, car_type
+        from member
+        where id=#{id}
+
+    </select>
+    
+	<!-- 현재 차량 상태와 주차 위치 조회 -->
+	<select id="getCarStatus" parameterType="string" resultType="com.mbc.mtps.dto.CarStatusDto">
+	
+	    select
+	        car.car_stat AS "car_stat",
+	        car.spc_no AS "spc_no",
+	        space.floor AS "floor",
+	        car.ent_time AS "ent_time",
+	        car.discnt_at AS "discnt_at",
+	        member.auth AS "auth"
+	
+	    from car
+	
+	    join member
+	        on car.id = member.id
+	
+	    left join space
+	        on car.spc_no = space.spc_no
+	
+	    where car.id = #{id}
+	
+	    order by car.ent_time desc
+	
+	    limit 1
+	
+	</select>
+	
+	<!-- 내 차량 이용 내역 -->
+	<select id="getParkingHistory" parameterType="String" resultType="com.mbc.mtps.dto.CarStatusDto">
+		
+		select 
+			ent_time AS "ent_time",
+	        ex_time AS "ex_time",
+	        cost AS "cost",
+	        discnt_at AS "discnt_at"
+		from car
+		where id = #{id}
+			and ex_time is not null
+		order by ex_time desc
+		limit 10
+		
+	</select>
+
+    <!-- 비밀번호 변경 -->
+    <update id="updatePw" parameterType="com.mbc.mtps.dto.MemberDto">
+
+        update member
+        set pw=#{pw}
+        where id=#{id}
+
+    </update>
+
+    <!-- 전화번호 변경 -->
+    <update id="updatePhone" parameterType="com.mbc.mtps.dto.MemberDto">
+
+        update member
+        set phone=#{phone}
+        where id=#{id}
+
+    </update>
+
+    <!-- 이메일 변경 -->
+    <update id="updateEmail" parameterType="com.mbc.mtps.dto.MemberDto">
+
+        update member
+        set email=#{email}
+        where id=#{id}
+
+    </update>
+
+    <!-- 차량번호와 전기차 여부 변경 -->
+    <update id="updateCar" parameterType="com.mbc.mtps.dto.MemberDto">
+
+        update member
+        set car_num=#{car_num},
+            car_type=#{car_type}
+        where id=#{id}
+
+    </update>
+    
+<!--================================== 점주 페이지 =================================-->
+
+
+
+
+</mapper>

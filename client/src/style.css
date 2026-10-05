@@ -1,0 +1,52 @@
+*{
+  margin : auto;
+  max-height: 2000px;
+}
+body{
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+
+/* HEADER */
+header{
+  width: 100%; /* 넓이 : 100% */
+  height: 100px; /* 높이 : 100px */
+  border: 1px solid; /* 영역 확인용 */
+}
+button.logBtn{
+  cursor: pointer;
+}
+
+
+/* NAV */
+nav{
+  width: 100%; /* 넓이 : 100% */
+  height: 50px; /* 높이 : 50px */
+  border: 1px solid; /* 영역 확인용 */
+}
+ul.nav{
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+}
+p.navLink:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+/* MAIN */
+main{
+  width: auto; /* 넓이 : 1000px */
+  height: 1300px; /* 높이 : 100px */
+  border: 1px solid; /* 영역 확인용 */
+}
+
+
+/* FOOTER */
+footer{
+  width: 100%; /* 넓이 : 100% */
+  height: 200px; /* 높이 : 100px */
+  border: 1px solid; /* 영역 확인용 */
+}

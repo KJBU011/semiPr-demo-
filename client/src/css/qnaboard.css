@@ -1,0 +1,234 @@
+/* ==========================================================================
+   qnaBoard.css
+   금손 JeoldaeParking · 메디컬타워 주차관리시스템
+   담당 범위: qnaboard.vue
+   ========================================================================== */
+
+.qna-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0px 32px 80px;
+}
+
+.qna-header {
+  text-align: left;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.qna-header h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--color-ink);
+  margin-top: 50px;
+  margin-bottom: 6px;
+  
+}
+
+.qna-description {
+  color: var(--color-ink-soft);
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.qna-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+}
+
+.qna-table th,
+.qna-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--color-line);
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+.qna-table thead th {
+  background: var(--color-navy-deep);
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  border-bottom: none;
+}
+
+.qna-row {
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.qna-row:hover { background: #eef0f8; }
+
+.title-cell { text-align: left !important; }
+.col-no { width: 80px; }
+.col-writer { width: 140px; }
+.col-date { width: 140px; }
+.col-read { width: 90px; }
+
+.answer-indent {
+  display: inline-block;
+  margin-left: 30px;
+  margin-right: 7px;
+  color: var(--color-ink-faint);
+}
+
+.qna-table .answer-title {
+  color: var(--color-ink-soft);
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.empty {
+  height: 120px;
+  color: var(--color-ink-faint);
+  text-align: center !important;
+}
+
+.write-wrap {
+  text-align: right;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.btn-write {
+  padding: 10px 22px;
+  background: #4B5694;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.btn-write:hover {
+  background: #3a4478;
+  transform: translateY(-1px);
+}
+
+.search-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.search-wrap select {
+  height: 42px;
+  padding: 0 10px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-elevated);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+/* ✅ 수정: FAQ와 동일한 너비로 통일 */
+.search-wrap input {
+  width: 400px;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.btn-search {
+  height: 42px;
+  padding: 0 22px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: #4B5694;
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.btn-search:hover { background: #3a4478; }
+
+.pagination-wrap {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-elevated);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.page-number.active {
+  background: #4B5694;
+  color: #fff;
+  border-color: #4B5694;
+}
+
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: #4B5694;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+.page-number.active {
+  background: #4B5694;
+  color: #fff;
+  border-color: #4B5694;
+}
+
+.page-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.page-btn:not(:disabled):hover {
+  background: #3a4478;
+}
+
+.page-number:not(.active):hover {
+  background: #eef0f8;
+  border-color: #4B5694;
+  color: #4B5694;
+}

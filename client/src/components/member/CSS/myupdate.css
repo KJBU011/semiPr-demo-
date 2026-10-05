@@ -1,0 +1,396 @@
+/* 특정 컴포넌트에만 적용되는 범위 지정 CSS (scoped) */
+
+.member-edit-page {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 회원 정보 리스트 영역: 왼쪽 정렬 */
+.info-list {
+  text-align: left;
+}
+
+/* 각 수정 항목(전화번호/이메일/...) 사이 아래쪽 여백 */
+.edit-row {
+  margin-bottom: 12px;
+}
+
+/* 입력 영역: 위쪽 여백 + 왼쪽 들여쓰기 */
+.edit-box {
+  margin-top: 8px;
+  padding-left: 16px;
+}
+
+/* 에러/불일치 안내문구용 빨간색 */
+.msg-red {
+  color: red;
+}
+
+/* 일치/성공 안내문구용 파란색 */
+.msg-blue {
+  color: blue;
+}
+
+/* 비밀번호 조건 안내문구용 회색 + 작은 글씨 */
+.pw-guide {
+  color: #555;
+  font-size: 13px;
+}
+
+/* [추가] 조건 6번: 최하단 취소/수정완료 버튼 영역 */
+.bottom-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.bottom-actions button {
+  padding: 10px 24px;
+  cursor: pointer;
+}
+
+/* [추가] 취소 버튼 스타일: 완료 버튼과 시각적으로 구분 */
+.btn-cancel {
+  background-color: #eee;
+}
+
+/* [추가] 수정완료 버튼 스타일 */
+.btn-complete {
+  background-color: #333;
+  color: #fff;
+}
+
+/* 모달 공통 배경: 화면 전체를 덮는 반투명 검은색 오버레이, 내용은 가운데 정렬 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 모달 내용 박스: 흰 배경, 둥근 모서리, 가운데 정렬된 텍스트 */
+.modal-box {
+  position: relative;
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* [추가] 조건 7,8번: 모달 우상단 X 닫기 버튼 */
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   위는 원본 스타일, 아래는 디자인 토큰 테마 오버라이드
+   ========================================================================== */
+
+/* ==========================================================================
+   MyUpdate page — brand theme overrides
+   (원본 myupdate-original.css 뒤에 로드되어 같은 선택자를 덮어씁니다)
+   ========================================================================== */
+
+.member-edit-page {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  --color-navy: #0a2345;
+}
+
+.member-edit-page h2 {
+  font-family: var(--font-display);
+}
+
+.pw-guide {
+  color: var(--color-muted);
+}
+
+.bottom-actions button {
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.btn-cancel {
+  background-color: var(--color-bg);
+  border-color: var(--color-border);
+  color: var(--color-muted);
+}
+
+.btn-cancel:hover {
+  background-color: var(--color-border);
+}
+
+.btn-complete {
+  background-color: #4b5694; /* [수정] 네이비 → 지정하신 색상 */
+}
+
+.btn-complete:hover {
+  background-color: #858bad; /* [수정] #4B5694보다 채도 낮고 연하게 (호버 시 눈에 띄게) */
+}
+
+.modal-box {
+  background-color: var(--color-surface);
+  border: 1.5px solid #0a2345; /* [추가] 모달 테두리 색상 */
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+/* [추가] 모달 확인 버튼 */
+.modal-confirm {
+  padding: 8px 20px;
+  margin-top: 12px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: #4b5694;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.modal-confirm:hover {
+  background-color: #858bad;
+}
+
+/* [추가] 페이지 전체 카드 처리 */
+.member-edit-page {
+  max-width: 560px;
+  padding: 32px 40px 40px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  margin-top: 32px;
+  margin-bottom: 64px;
+}
+
+.member-edit-page h2 {
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.member-edit-page hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
+/* [수정] 아이디/이름 — my.css와 동일하게 "라벨 우측정렬 | 구분선 | 값 좌측정렬" 2단 레이아웃 */
+.static-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px !important;
+}
+
+.static-row > strong {
+  flex: 0 0 120px; /* [수정] 100px → 120px, "이메일(선택)" 등 긴 라벨이 안 잘리게 */
+  text-align: right;
+  padding-right: 16px;
+  border-right: 1px solid var(--color-border);
+  font-size: 14px;
+  color: var(--color-muted);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.static-row > span {
+  flex: 1;
+  text-align: left;
+  padding-left: 16px;
+  font-size: 14px;
+  color: var(--color-ink);
+}
+
+/* [추가] input/select 공통 스타일 */
+.edit-box input[type="text"],
+.edit-box input[type="password"],
+.edit-box input:not([type]),
+.edit-box select {
+  padding: 9px 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  transition: border-color 0.15s ease;
+}
+
+.edit-box input:focus,
+.edit-box select:focus {
+  outline: none;
+  border-color: var(--color-navy); /* [수정] 틸 → 네이비 */
+}
+
+/* [추가] 전화번호 입력 줄 — 항상 한 줄로 표시 */
+.phone-inputs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* [추가] 이메일 아이디 입력 / @ / 도메인 선택 / 도메인 직접입력을 한 줄로 정렬 */
+.email-inputs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap; /* 화면이 좁아지면 자연스럽게 다음 줄로 */
+}
+
+.email-id-input {
+  width: 160px; /* [수정] 기존 기본 폭(너무 넓음) → 160px로 축소 */
+}
+
+.email-at {
+  color: var(--color-muted);
+}
+
+.email-domain-select {
+  width: 130px;
+}
+
+.email-domain-input {
+  width: 140px; /* [수정] 기존 기본 폭 → 140px로 축소 */
+}
+
+.phone-fixed {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.phone-dash {
+  color: var(--color-muted);
+}
+
+.phone-input {
+  width: 64px;
+  text-align: center;
+}
+
+/* [추가] 변경/확인/표시/숨김 등 인라인 버튼 */
+.edit-row button {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #c9b37e; /* [수정] 앰버 → 아이보리 톤 */
+  background: transparent;
+  color: #a3894f; /* [수정] 앰버 → 아이보리 톤(글자는 살짝 더 진하게, 가독성 위해) */
+  font-size: 12px;
+  font-weight: 700;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.edit-row button:hover {
+  background: #c9b37e; /* [수정] 아이보리 톤으로 채움 */
+  color: #fff;
+}
+
+.edit-row button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* [추가] 라벨(전화번호/이메일/비밀번호/차종/차량번호)과 입력란을 한 줄로 정렬 */
+.edit-row {
+  display: flex;
+  align-items: flex-start;
+}
+
+.edit-row > p:first-child {
+  flex: 0 0 120px; /* [수정] 100px → 120px, "이메일(선택)" 등 긴 라벨이 안 잘리게 */
+  margin: 0;
+  padding-top: 8px;
+  padding-right: 16px;
+  text-align: right; /* [수정] 좌측 정렬 → 우측 정렬 */
+  border-right: 1px solid var(--color-border); /* [추가] 좌우 구분선 */
+  white-space: nowrap; /* [수정] 라벨이 줄바꿈되지 않도록 */
+}
+
+.edit-box {
+  flex: 1;
+  margin-top: 0; /* 세로 배치용 여백이었던 값 → flex 정렬로 대체하니 제거 */
+  padding-left: 16px; /* [수정] 0 → 16px, 구분선과 값 사이 여백 */
+  text-align: left;
+}
+
+/* [추가] 비밀번호 줄: "라벨 | 마스킹값 + 변경버튼" 한 줄 정렬 */
+.pw-summary {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 8px;
+  padding-left: 16px; /* [수정] 구분선과 값 사이 여백 (edit-box와 통일) */
+}
+
+.pw-masked {
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: var(--color-ink);
+}
+
+/* [추가] '변경' 클릭 시 펼쳐지는 비밀번호 변경 폼 (라벨 줄 아래, 들여쓰기) */
+.pw-edit-box {
+  margin-top: 8px;
+  margin-left: 0px; /* 라벨 폭(120px) + padding-right(16px)만큼 들여써서 내용 줄과 맞춤 */
+}
+
+/* [추가] 차종 줄: "현재 OO차" 텍스트를 라디오 버튼 위에 배치 */
+.car-type-current {
+  font-size: 14px;
+  padding-top: 8px;
+  margin-bottom: 8px;
+}
+
+.car-type-radios label {
+  margin-right: 4px;
+}
+
+/* [추가] 차종 라디오 버튼 라벨 정리 */
+.edit-box label {
+  font-size: 13px;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.edit-box input[type="radio"] {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.edit-box button{
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #c9b37e; /* [수정] 앰버 → 아이보리 톤 */
+  background: transparent;
+  color: #a3894f; /* [수정] 앰버 → 아이보리 톤(글자는 살짝 더 진하게, 가독성 위해) */
+  font-size: 12px;
+  font-weight: 700;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.edit-box button:hover {
+  background: #c9b37e; /* [수정] 아이보리 톤으로 채움 */
+  color: #fff;
+}
+
+.edit-box button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

@@ -1,0 +1,83 @@
+/* ==========================================================================
+   Admin — root page shell + tab menu (table-based tab switcher)
+   ========================================================================== */
+
+#admin-page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+#admin-page > h1 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--color-ink);
+  margin-bottom: 20px;
+}
+
+/* Strip the border="1" table look and turn the header row into a tab bar */
+/* [수정] 전부 직계 자식(>) 체인으로 명확히 좁힘 — #admin-page 안에 중첩 렌더링되는
+   하위 페이지(회원관리/점주관리/차량관리 등)의 테이블에는 절대 안 걸리도록 함.
+   (thead tr / tbody td처럼 중간에 후손 선택자가 하나라도 남아있으면, 그 아래
+   임의 깊이로 중첩된 하위 테이블의 셀까지 다 걸려버림 — 이게 그동안의 헤더 정렬
+   버그의 진짜 원인이었음) */
+#admin-page > table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+}
+
+#admin-page > table > thead > tr > th,
+#admin-page > table > tbody > tr > td {
+  border: none;
+}
+
+#admin-page > table > thead > tr {
+  display: flex;
+  background: #e7eaf0; /* [수정] 틸 tint → 네이비 tint */
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  overflow: hidden;
+}
+
+#admin-page > table > thead > tr > th {
+  flex: 1;
+  padding: 0;
+}
+
+#admin-page .adminMenu {
+  margin: 0;
+  padding: 16px 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: #0a2345; /* [수정] 틸 → 네이비 */
+  border-bottom: 3px solid transparent;
+  transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+#admin-page .adminMenu:hover {
+  color: #0a2345; /* [수정] 틸 → 네이비 */
+  background: rgba(255, 255, 255, 0.5);
+  border-bottom-color: #0a2345; /* [수정] 앰버 → 네이비 */
+  text-decoration: none; /* overrides the underline from the inline <style> block */
+  cursor: pointer;
+}
+
+/* [추가] 현재 선택된 탭: 바탕색 변화 + 하단 밑줄로 표시 */
+#admin-page .adminMenu.active {
+  color: #0a2345;
+  background: var(--color-surface);
+  border-bottom-color: #0a2345;
+  font-weight: 900;
+}
+
+#admin-page > table > tbody > tr > td {
+  padding: 12px 4px 40px 20px; /* [수정] 좌측 패딩만 4px → 20px, 콘텐츠가 카드 왼쪽 끝에 너무 붙어있던 문제 */
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}

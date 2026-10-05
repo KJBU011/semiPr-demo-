@@ -1,0 +1,98 @@
+/* ==========================================================================
+   qnaWrite.css
+   금손 JeoldaeParking · 메디컬타워 주차관리시스템
+   담당 범위: qnawrite.vue
+   ========================================================================== */
+
+.write-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+}
+
+.write-page h2 {
+  text-align: center;
+  font-family: var(--font-display);
+  color: var(--color-ink);
+  margin: 0;
+  padding: 0;
+}
+
+.write-form {
+  margin-top: 25px;
+  border-top: 2px solid var(--color-navy-deep);
+}
+
+.form-row {
+  display: flex;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.form-row label {
+  width: 120px;
+  padding: 15px;
+  background: #eef0f8;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  font-family: var(--font-body);
+}
+
+.form-row input {
+  flex: 1;
+  padding: 10px;
+  margin: 7px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+.content-row textarea {
+  flex: 1;
+  min-height: 300px;
+  padding: 12px;
+  margin: 7px;
+  resize: vertical;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+.button-wrap {
+  display: flex;
+  justify-content: center;  
+  gap: 16px;              
+  margin-top: 20px;
+}
+
+/* ✅ 수정: 취소 버튼 */
+.button-wrap button {
+  padding: 9px 22px;
+  cursor: pointer;
+  border: 1px solid #4B5694;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-elevated);
+  color: #4B5694;
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: background var(--transition), color var(--transition);
+}
+
+.button-wrap button:hover {
+  background: #eef0f8;
+}
+
+/* ✅ 수정: 작성완료 버튼 #4B5694 */
+.btn-submit {
+  background: #4B5694 !important;
+  color: #fff !important;
+  border-color: #4B5694 !important;
+}
+
+.btn-submit:hover {
+  background: #3a4478 !important;
+  border-color: #3a4478 !important;
+}
