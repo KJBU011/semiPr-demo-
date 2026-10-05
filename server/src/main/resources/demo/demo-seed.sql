@@ -35,7 +35,7 @@ create table if not exists qna (
 
 -- demo member (pw = demo1234, BCrypt)
 insert into member (id, pw, name, discnt_time, phone, email, auth, car_num, car_type) values
-('demo', '$2b$10$YGn9pJzz0q6/50oRevCWf.Qy6YcYTHPstoWm96nDso7Db0tpFT0k', '데모사용자', 0, '010-0000-0000', 'demo@example.com', 1, '12가 3456', 0)
+('demo', '$2b$10$0DnIcqJik1I1RfCdfulrzuKtJim14pF7zKl1eL8aKvk4eNsQwKTGO', '데모사용자', 0, '010-0000-0000', 'demo@example.com', 1, '12가 3456', 0)
 on conflict (id) do nothing;
 
 -- sample cars (demo 회원 주차 중 2대)
